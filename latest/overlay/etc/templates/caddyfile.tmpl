@@ -9,5 +9,6 @@ fastcgi / 127.0.0.1:9000 php
 rewrite  {
   regexp /.*
   ext /
-  to /index.php?{query}
+  {{- $to_path := print "/" (getenv "MYWEBSQL_EXTERNAL_PATH") "/index.php?{query}" }}
+  to {{ $to_path | path.Clean }}
 }

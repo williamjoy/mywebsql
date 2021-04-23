@@ -71,3 +71,13 @@ then
   /bin/s6-svscanctl -t /etc/s6
   exit 1
 fi
+
+if [[ -n "$MYWEBSQL_EXTERNAL_PATH" ]]
+then
+  echo "> creqating soft link"
+  mv -v /srv/www "/srv/${MYWEBSQL_EXTERNAL_PATH}"
+  mkdir -pv /srv/www
+  chown -R caddy:caddy /srv/www
+  mv -v "/srv/${MYWEBSQL_EXTERNAL_PATH}" /srv/www/
+  #ln -sv /srv/www/ "/srv/www/${MYWEBSQL_EXTERNAL_PATH}"
+fi
